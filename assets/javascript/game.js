@@ -1,47 +1,64 @@
-// Variables
-var lettersArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var winsNum = 0;
-var lossesNum = 0;
-var guessesLeftNum = 10;
-var lettersGuessedArr = [];
-var guessedLetter = null;
-var winningLetter = lettersArr[Math.floor(Math.random() * lettersArr.length)];
+// Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+var comptuerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z"]
 
-// Creating a function to make resetting some variables easier.
-function reset() {
-    guessesLeftNum = 10;
-    lettersGuessedArr = [];
-    winningLetter = lettersArr[Math.floor(Math.random() * lettersArr.length)];
+var wins = 0;
+var losses = 0;
+var guessesLeft = 10;
+
+
+var winsText = document.getElementById("wins");
+var lossesText = document.getElementById("loses");
+var guessesLeftText = document.getElementById("guesses-left");
+var comptuerGuess
+
+
+function gameStart(){
+    guessesLeft = 10;
+    winsText.innerText = wins;
+    lossesText.innerText = losses;
+    comptuerGuess = comptuerGuess[Math.floor(Math.random() * comptuerGuess.length)];
+    guessesLeftText.innerText = guessesLeft;
+   
 }
 
-// Creating a function telling the computer keystroke should be assigned to the guessedLetter variable.
-document.onkeyup = function(event) {
-    var guessedLetter = String.fromCharCode(event.keyCode).toLowerCase();
+document.addEventListener("DOMContentLoaded", function(){
+    gameStart();
+});
+
+
+document.onkeyup = function(event){
     
-// Tell the computer if the letter already exists or is not in the array, do nothing. Otherwise, reduce the number
-// of guesses. Not going to lie, I had to look this up...
-    if (lettersGuessedArr.indexOf(guessedLetter) < 0 && lettersArr.indexOf(guessedLetter) >= 0) {
-    lettersGuessedArr[lettersGuessedArr.length]=guessedLetter;
-    guessesLeftNum--;
+    var userGuess = event.key;
+
+    if(userGuess!== comptuerGuess && guessesLeft > 0){
+        guessesLeft--;
+        guessesLeftText.innerText = guessesLeft;
     }
 
-// If you win, show an alert that says you win.
-    if (winningLetter === guessedLetter) {
-        alert("The letter was " + winningLetter + "! You Win! :D");
-        winsNum++;
-        reset();
+    else if(userGuess === comptuerGuess && guessesLeft > 0 ){
+        wins++;
+        alert("YOU WIN!");
+        gameStart();
+    
     }
 
-// If you run out of guesses, show an alert that says you lose.
-    if (guessesLeftNum === 0) {
-        alert("You Lose! D: The letter was " + winningLetter + "!");
-        lossesNum++;
-        reset();
+    else {
+        losses++;
+        alert("YOU LOSS!");
+        gameStart();
     }
 
-// Put our variables into our HTML to show in the DOM.
-    $("#guesses-left").text("Guesses Left: " + guessesLeftNum);
-    $("#wins").text("Wins: " + winsNum);
-    $("#losses").text("Losses: " + lossesNum);
-    $("#guesses-so-far").text("Your Guesses So Far: " + lettersGuessedArr.join(", "));
+    
+
 }
+
+
+
+        
+// console.log(alpha[1]);
+
+// Setting array for computer to choose 
+
+
+
+
